@@ -10,6 +10,9 @@ import pathlib
 api_routes = Blueprint('routes_api',__name__)
 
 swagger_config_dir = str(pathlib.Path(__file__).resolve().parent.parent)
+pickle_in = open("model.pkl","rb")
+bg_model=pickle.load(pickle_in)
+
 @api_routes.route('/predict_file',methods=["POST"])
 @swag_from(os.path.join(swagger_config_dir, 'swagger_configs', 'swagger_config_1.yml'))
 def predict_bandgap_file():
@@ -23,4 +26,4 @@ def predict_bandgap_file():
     y_infer_pred = bg_model.predict(X_infer)
     bandgap_dict = dict(zip(compounds_infer, y_infer_pred))
     print("The predicted values of Eg are:\n")
-    return jsonify(bandgap_dict)
+    return bandgap_dict
