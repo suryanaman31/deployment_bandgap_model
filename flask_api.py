@@ -6,6 +6,7 @@ import pickle
 import pandas as pd
 import flasgger
 from flasgger import Swagger
+from flasgger.utils import  swag_from
 
 app=Flask(__name__)
 Swagger(app)
@@ -14,6 +15,7 @@ pickle_in = open("model.pkl","rb")
 bg_model=pickle.load(pickle_in)
 
 @app.route('/predict_file',methods=["POST"])
+@swag_from(os.path.join(swagger_config_dir, 'swagger_configs', 'swagger_config.yml'))
 def predict_bandgap_file():
     """Let's Authenticate the Bandgaps Application 
     This is using docstrings for specifications.
