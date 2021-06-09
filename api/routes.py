@@ -13,21 +13,7 @@ swagger_config_dir = str(pathlib.Path(__file__).resolve().parent.parent)
 @api_routes.route('/predict_file',methods=["POST"])
 @swag_from(os.path.join(swagger_config_dir, 'swagger_configs', 'swagger_config_1.yml'))
 def predict_bandgap_file():
-    """Let's Authenticate the Bandgaps Application 
-    This is using docstrings for specifications.
-    ---
-    parameters:
-      - name: file
-        in: formData
-        type: file
-        required: true
-      
-    responses:
-        200:
-            description: The output values
-        
-    """
-    data_infer=pd.read_csv(request.files.get("file"))
+    data_infer=pd.read_csv(request.files.get("input_file"))
     compounds_infer = data_infer['composition'].tolist()
     p=[]
     for i in range(6,82):
