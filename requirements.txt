@@ -1,5 +1,5 @@
 Flask==1.1.1
-flasgger 0.5.2 
+flasgger==0.5.2 
 gunicorn==19.9.0
 MarkupSafe==1.1.1
 Werkzeug==0.15.5
