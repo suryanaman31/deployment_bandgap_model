@@ -23,4 +23,4 @@ def predict_bandgap_file():
     y_infer_pred = bg_model.predict(X_infer)
     bandgap_dict = dict(zip(compounds_infer, y_infer_pred))
     print("The predicted values of Eg are:\n")
-    return bandgap_dict
+    return jsonify(bandgap_dict)
