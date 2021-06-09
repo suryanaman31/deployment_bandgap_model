@@ -1,1 +1,1 @@
-# deployment_bandgap_model
+# deployment of bandgap model
