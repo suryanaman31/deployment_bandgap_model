@@ -13,11 +13,6 @@ Swagger(app)
 pickle_in = open("model.pkl","rb")
 bg_model=pickle.load(pickle_in)
 
-@app.route('/')
-def welcome():
-    return "Welcome All"
-
-
 @app.route('/predict_file',methods=["POST"])
 def predict_bandgap_file():
     """Let's Authenticate the Bandgaps Application 
