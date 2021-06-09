@@ -10,7 +10,7 @@ import pathlib
 api_routes = Blueprint('routes_api',__name__)
 
 swagger_config_dir = str(pathlib.Path(__file__).resolve().parent.parent)
-@app.route('/predict_file',methods=["POST"])
+@app_routes.route('/predict_file',methods=["POST"])
 @swag_from(os.path.join(swagger_config_dir, 'swagger_configs', 'swagger_config_1.yml'))
 def predict_bandgap_file():
     """Let's Authenticate the Bandgaps Application 
