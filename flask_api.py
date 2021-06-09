@@ -1,47 +1,15 @@
 # -*- coding: utf-8 -*-
+from api.app import create_app
+from api.config import DevelopmentConfig, ProductionConfig
+from api.routes import api_routes
 
-from flask import Flask, request
-import numpy as np
-import pickle
-import pandas as pd
-import flasgger
-from flasgger import Swagger
-from flasgger.utils import  swag_from
+app = create_app(
+    config_object=DevelopmentConfig)
 
-app=Flask(__name__)
-Swagger(app)
+app.register_blueprint(api_routes)
 
-pickle_in = open("model.pkl","rb")
-bg_model=pickle.load(pickle_in)
+app.config["JSON_SORT_KEYS"] = False
 
-@app.route('/predict_file',methods=["POST"])
-@swag_from(os.path.join(swagger_config_dir, 'swagger_configs', 'swagger_config.yml'))
-def predict_bandgap_file():
-    """Let's Authenticate the Bandgaps Application 
-    This is using docstrings for specifications.
-    ---
-    parameters:
-      - name: file
-        in: formData
-        type: file
-        required: true
-      
-    responses:
-        200:
-            description: The output values
-        
-    """
-    data_infer=pd.read_csv(request.files.get("file"))
-    compounds_infer = data_infer['composition'].tolist()
-    p=[]
-    for i in range(6,82):
-        p.append(i)
-    X_infer = data_infer.iloc[:,p]
-    y_infer = data_infer.iloc[1]
-    y_infer_pred = bg_model.predict(X_infer)
-    bandgap_dict = dict(zip(compounds_infer, y_infer_pred))
-    print("The predicted values of Eg are:\n")
-    return bandgap_dict
-
-if __name__=='__main__':
-    app.run(debug = True)
+# if __name__  == '__main__':
+#     app.debug = True
+#     app.run(host="0.0.0.0",port=5777)
