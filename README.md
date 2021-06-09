@@ -1,1 +1,0 @@
-# deployment of bandgap model
