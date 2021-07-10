@@ -23,11 +23,11 @@ def predict_bandgap_file():
     #Accessing the atomic numbers
 
     datno = {}
-    feat_norm = xlrd.open_workbook('element_properties.xlsx')
+    feat_norm = xlrd.open_workbook('api/element_properties.xlsx')
     norm_data = feat_norm.sheet_by_index(0)   
 
-    o1 = open("ele_brac_out.txt", "w")
-    o2 = open("ele_out.txt", "w")
+    o1 = open("api/ele_brac_out.txt", "w")
+    o2 = open("api/ele_out.txt", "w")
 
     col = ["At no.","At wt.","At Rad","Cov Rad","Ion Rad","No of val e-","s e-","p e-","d e-","outer shell e-","first IE","polarizability","MP","BP","density","specific heat","heat fusion","heat vap","ther cond"]
     col_name = ""
@@ -124,7 +124,7 @@ def predict_bandgap_file():
 
     o1.close()
 
-    data_infer=pd.read_csv("ele_out.txt", sep = ";")
+    data_infer=pd.read_csv("api/ele_out.txt", sep = ";")
     compounds_infer = data_infer['Compound'].tolist()
     p=[]
     for i in range(3,79):
