@@ -130,11 +130,10 @@ def predict_bandgap_file():
     for i in range(3,79):
         p.append(i)
     X_infer = data_infer.iloc[:,p]
-    y_infer = data_infer.iloc[1]
-    from sklearn.preprocessing import MinMaxScaler()
+    from sklearn.preprocessing import MinMaxScaler
     scaler = MinMaxScaler()
     X_infer = scaler.fit_transform(X_infer)
     y_infer_pred = bg_model.predict(X_infer)
     bandgap_dict = dict(zip(compounds_infer, y_infer_pred))
-        print("The predicted values of Eg are:\n")
-        return bandgap_dict
+    print("The predicted values of Eg are:\n")
+    return bandgap_dict
