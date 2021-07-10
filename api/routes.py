@@ -33,8 +33,8 @@ def predict_bandgap_file():
         col_name = col_name + i+"_"+ "sum" + ";" +  i+"_"+ "wt_avg" + ";" +  i+"_"+ "maximum" + ";" +  i+"_"+ "minimum" + ";" 
     line1 =  "Compound" + ";" + "Number of Elements" + ";" + "Elements+Coeff" + ";" + col_name + "\n"
     o2.write(line1)
-
-    with open(request.files.get("input_file")) as o:
+    file = request.files.get("input_file")
+    with open(file.stream) as o:
         for line in o:
             string=line.split("\n")[0]
             nflag=0
