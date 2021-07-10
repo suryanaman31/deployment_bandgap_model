@@ -16,15 +16,13 @@ bg_model=pickle.load(pickle_in)
 @api_routes.route('/predict_file',methods=["POST"])
 @swag_from(os.path.join(swagger_config_dir, 'swagger_configs', 'swagger_config_1.yml'))
 def predict_bandgap_file():
-    import xlrd 
     temp = ""
     el = []
     val = []
     #Accessing the atomic numbers
 
     datno = {}
-    feat_norm = xlrd.open_workbook('api/element_properties.xlsx')
-    norm_data = feat_norm.sheet_by_index(0)   
+    norm_data = pd.read_excel("api/element_properties.xlsx", sheet_name = "Element_prop")   
 
     o1 = open("api/ele_brac_out.txt", "w")
     o2 = open("api/ele_out.txt", "w")
@@ -124,7 +122,7 @@ def predict_bandgap_file():
 
     o1.close()
 
-    data_infer=pd.read_csv("api/ele_out.txt", sep = ";")
+    data_infer = pd.read_csv("api/ele_out.txt", sep = ";")
     compounds_infer = data_infer['Compound'].tolist()
     p=[]
     for i in range(3,79):
