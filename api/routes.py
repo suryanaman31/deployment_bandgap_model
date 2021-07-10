@@ -34,7 +34,7 @@ def predict_bandgap_file():
     line1 =  "Compound" + ";" + "Number of Elements" + ";" + "Elements+Coeff" + ";" + col_name + "\n"
     o2.write(line1)
     file = request.files.get("input_file")
-    with open(file.read()) as o:
+    with open(file, 'rb') as o:
         for line in o:
             string=line.split("\n")[0]
             nflag=0
