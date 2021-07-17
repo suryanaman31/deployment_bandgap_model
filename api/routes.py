@@ -22,8 +22,7 @@ def predict_bandgap_file():
     #Accessing the atomic numbers
 
     datno = {}
-    norm_data = pd.read_excel("api/element_properties.xlsx", sheet_name = "Element_prop")   
-
+    norm_data = pd.read_excel("api/element_properties.xlsx", sheet_name = "Element_prop")  
     o1 = open("api/ele_brac_out.txt", "w")
     o2 = open("api/ele_out.txt", "w")
 
@@ -34,7 +33,9 @@ def predict_bandgap_file():
     line1 =  "Compound" + ";" + "Number of Elements" + ";" + "Elements+Coeff" + ";" + col_name + "\n"
     o2.write(line1)
     file = request.files.get("input_file")
-    with open(file.stream) as o:
+    with open('compounds_for_prediction.txt', 'wb') as f:
+        f.write(file.getbuffer())
+    with open('compounds_for_prediction.txt') as o:
         for line in o:
             string=line.split("\n")[0]
             nflag=0
@@ -96,9 +97,9 @@ def predict_bandgap_file():
                     a[k].append(val[k])
                 b = ''
                 for j in range(1,20):      #j will vary so that with each j our dictionary contains a different property
-                    for i in range(82):
-                            props = norm_data.cell(i,j).value   #property as a value
-                            elem = norm_data.cell(i,0).value    #element name as a key
+                    for i in range(0,81):
+                            props = float(norm_data.iloc[i,j])  #property as a value
+                            elem = str(norm_data.iloc[i,0])    #element name as a key
                             datno[elem] = props
                     maxim = -1       #defining initial values of the descriptors. Since normalized values are in range [0,1] 
                     minim = 15000
