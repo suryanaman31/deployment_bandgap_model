@@ -131,6 +131,7 @@ def predict_bandgap_file():
         p.append(i)
     X_infer = data_infer.iloc[:,p]
     scaler = joblib.load("scaler.save") 
+    scaler.clip = False
     X_infer = scaler.transform(X_infer)
     y_infer_pred = bg_model.predict(X_infer)
     bandgap_dict = dict(zip(compounds_infer, y_infer_pred))
