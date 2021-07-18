@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import pickle
 import pathlib
+import joblib
 
 api_routes = Blueprint('routes_api',__name__)
 
@@ -129,9 +130,8 @@ def predict_bandgap_file():
     for i in range(3,79):
         p.append(i)
     X_infer = data_infer.iloc[:,p]
-    from sklearn.preprocessing import MinMaxScaler
-    scaler = MinMaxScaler()
-    X_infer = scaler.fit_transform(X_infer)
+    scaler = joblib.load("scaler.save") 
+    X_infer = scaler.transform(X_infer)
     y_infer_pred = bg_model.predict(X_infer)
     bandgap_dict = dict(zip(compounds_infer, y_infer_pred))
     print("The predicted values of Eg are:\n")
